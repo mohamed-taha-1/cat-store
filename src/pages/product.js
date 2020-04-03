@@ -1,8 +1,9 @@
 import React from "react";
-
+import AddToCart from "../store/actions/actions";
 import {getById}  from "../api/products";
+import {connect}  from "react-redux";
 
-export default class Product extends React.Component
+ class Product extends React.Component
 {   
 
 state=
@@ -28,7 +29,7 @@ state=
         )
      
     }
-handleQuntity=(event)=>{
+  handleQuntity=(event)=>{
     const value=event.target.value;
     if(value <0){
         return ;
@@ -36,14 +37,23 @@ handleQuntity=(event)=>{
     this.setState({
        quntity:value
     })
-}
+   }
+   
 
+    AddToCart=(product)=>{
+  
+        this.props.AddToCart(product,this.state.quntity);
+
+
+     }
     render()
     {
         if(this.state.loading)
                return " loading ... ";
-
-        const product=this.state.product;  //   called  constuct  
+        
+        const product=this.state.product; 
+        const quntity =this.state.quntity;
+        //   called  constuct  
         return (
             <div>
                 
@@ -52,16 +62,17 @@ handleQuntity=(event)=>{
                        <img src={product.image}  width="100%"   />
                     </div>
                     <div className="col">
+                            
                             <h1>{product.name}</h1>
                             <p>price : {product.price}$</p>
                             <br/>
                            <p>description  :  {product.description}</p>
                            <br/>
-                           <input type="number"  value={this.state.quntity }    onChange={this.handleQuntity}      />
+                           <input type="number"  value={quntity }    onChange={this.handleQuntity}      />
                            <br/>
                            <br/>
-                          <p>Total :  {this.state.quntity * product.price}</p>
-                           <button className="btn btn-primary">ADD to  cart</button>
+                          <p>Total :  { quntity* product.price}</p>
+                           <button className="btn btn-primary" onClick={this.AddToCart}>ADD to  cart</button>
                     </div>
                 </div>
             </div>
@@ -69,3 +80,13 @@ handleQuntity=(event)=>{
     }
   
 }
+
+const mapDispatchToProps=(dispatch)=>{
+    
+    return{
+        AddToCart : (productInfo,quntity)=>dispatch(AddToCart(productInfo,quntity)),
+
+        
+    };
+}
+ export default connect(null,mapDispatchToProps)(Product);

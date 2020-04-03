@@ -1,6 +1,9 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-//import CartIcon from "./Components/carticon";
+// import CartIcon from "./Components/carticon";
+
+
+
 // Pages
 import Home from "./pages/Home";
 import Products from "./pages/Products";
@@ -8,7 +11,7 @@ import Cart from "./pages/Cart";
 import Product from "./pages/product";
 
 
-export function App  ()
+function App  ()
 
 {
    return (
@@ -29,25 +32,27 @@ export function App  ()
                          <Link className="nav-link" to="/products">Products</Link>
                      </li>
                     <li className="nav-item">
-                      <Link className="nav-link" to="/cart">Cart</Link>
+                      <Link className="nav-link" to="/Cart">Cart</Link>
                     </li>
                    </ul>
          
                   </div>
-        
+         
             </nav>
 
-
+         
       <Route path="/" component={Home} exact />
-      <Route path="/products" component={Products} exact />
+      <Route path="/products" component={Products}  exact />
       <Route path="/products/:id" component={Product} />
+      
       <Route path="/cart" component={Cart} />
     
-
+     
      </div>
     </Router>
   );
  }
 
 
+ 
 export default App;

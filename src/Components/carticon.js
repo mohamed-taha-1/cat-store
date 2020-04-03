@@ -1,15 +1,23 @@
 import React from "react";
+import {Link } from "react-router-dom";
+import {connect} from "react-redux";
 
-
-export   function CartIcon(){
+  function CartIcon(props){
     return(
-        <div>
-           <i class="fas fa-shopping-cart"></i>
-            <span className="badg badg-danger">2</span>
+        <div  id="cart-icon ">
+          <Link to="/Cart">
+               <i className="fas fa-shopping-cart"></i>
+               <p>{props.totalQuantity}</p>
+            </Link>
         </div>
     )
 }
  
-export default {
-    CartIcon
+const mapStateToProps =(state)=>{
+
+      return {
+            totalQuantity :state.cart.reduce((total,item)=> total + parseInt(item.quantity) , 0)
+      };
 }
+
+export default connect(mapStateToProps)(CartIcon);
